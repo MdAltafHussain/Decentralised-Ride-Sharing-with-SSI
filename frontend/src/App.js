@@ -40,7 +40,7 @@ class App extends Component {
     const portNumber = '7545';
 
     // the blockchain address
-    const address = '0xc30eA5bdE02F2FF1e6134d41a7D6796A7d999F36';
+    const address = '0xCfFD04a0805A3228C35e256185F1e453e6978E53';
 
     const blockchainFunctions = await initBlockchain(portNumber, address, derisInterface);
     const getAvailableRidesListener = cb => blockchainFunctions.events.RiderDetails({}).on('data', (event) => cb(event));

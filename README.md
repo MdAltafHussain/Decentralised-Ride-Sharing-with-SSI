@@ -1,4 +1,3 @@
-# DeRiS
 Decentralized ride sharing on the Ethereum blockchain.
 The project contains the frontend website and backend Ethereum Smart Contract to deploy and run the decentralized ride sharing application.
 

@@ -1,6 +1,3 @@
-//Creator: Nirvan S.P. Theethira
-//Date: 04/29/2020
-//Purpose: CSCI 5673 Group Project
 //The file contains the solidity contract that controls interactions between rider and driver
 //The file need to depolyed on the blockchain
 //COMPILE: 
@@ -55,6 +52,7 @@ contract Deris{
     
     function driveRequest() public{
         // Function used to update/add user details when user signs on to the application as driver
+        //console.log("Drive request function");
         if(users[msg.sender].isUser == false){
             userList.push(msg.sender);
             users[msg.sender] = user({
@@ -89,6 +87,7 @@ contract Deris{
         // pick: pickup location in modified lat and long 40.005140,-105.256061 => 40005140, -105256061
         // drop: dropoff location in modified lat and long 40.005140,-105.256061 => 40005140, -105256061
         // tripCost: Estimate cost of entire trip
+        //console.log("Ride request function");
         if(users[msg.sender].isUser == false){
             userList.push(msg.sender);
             users[msg.sender] = user({
@@ -119,6 +118,7 @@ contract Deris{
     
     function getNumber() view public returns(int){
         // returns users unique number in the system
+        //console.log("Get Number function");
         if (users[msg.sender].isUser==true){
             return int(users[msg.sender].number);
         }
@@ -129,10 +129,13 @@ contract Deris{
     
     function getWaitingRiders() public{
         // returns list of waiting riders to a driver
+        //console.log("Get waiting riders");
         require(users[msg.sender].isUser==true, "Need to be a user to select rider");
         require(users[msg.sender].state==Status.DRIVER, "User needs to be in driver mode to pick rider");
         for (uint i=0; i<userList.length; i++) {
+            //console.log("checking users");
             if (users[userList[i]].currPairing == address(0) && users[userList[i]].state == Status.RIDER){
+                //console.log("pair found");
                 emit RiderDetails(users[userList[i]].number, users[userList[i]].pickup, users[userList[i]].dropoff, users[userList[i]].escrow);
             }
         }
@@ -141,6 +144,7 @@ contract Deris{
 
     function pickRider(uint riderNumber, uint arrivalTime) public{
         // pairs rider and driver and informs rider of driver arrival time
+        //console.log("pick rider");
         require(users[msg.sender].isUser==true, "Need to be a user to select rider");
         require(users[msg.sender].state==Status.DRIVER, "User needs to be in driver mode to pick rider");
         require(users[msg.sender].currPairing == address(0), "driver currently paired");
@@ -162,6 +166,7 @@ contract Deris{
     
     function informRider(int256[] memory loc) public{
         // informs rider of drivers arrival at pickup location
+        //console.log("Inform Rider");
         require(users[msg.sender].isUser==true, "Need to be a user to inform rider");
         require(users[msg.sender].state==Status.DRIVER, "User needs to be in driver mode to inform rider");
         require(users[msg.sender].currPairing != address(0), "Driver needs to have an assigned rider to inform");
@@ -177,6 +182,7 @@ contract Deris{
     
     function payDriver() public payable{
         // rider pays driver fixed amount for amount of trip complete
+        //console.log("Pay Driver");
         require(users[msg.sender].isUser == true, "Need to be a user to pay");
         require(users[msg.sender].state == Status.RIDER, "User needs to be in rider mode to pay driver");
         require(users[msg.sender].currPairing != address(0), "Rider needs to have an assigned driver to pay");
@@ -196,6 +202,7 @@ contract Deris{
     }
     
     function reset(address usrAddr) private{
+        //console.log("Reset function");
         users[usrAddr].state = Status.INACTIVE;
         users[usrAddr].currPairing = address(0);
         users[usrAddr].pickup = coordinates({lat: 0, long: 0});
@@ -210,6 +217,7 @@ contract Deris{
     function userReset() public payable{
         //885999999991808
         // reset user to INACTIVE state after ride is complete/cancelled
+        //console.log("User Reset Function");
         require(users[msg.sender].isUser == true, "Need to be a user to complete ride");
         require(users[msg.sender].state != Status.INACTIVE, "Need to be an active user to complete ride");
         require(msg.value>=0, "Ether need to be sent to reset");

@@ -32,6 +32,7 @@ class LandingPage extends React.Component {
     // keep tracking the user input to use for submission
     onChange(event) {
         this.setState({ethereumAddress: event.target.value})
+        //this.setState({ethereumAddress:"0x94Fe9c9e69Ec51b0A4248C8FE9dB19885Af4c099"})
     }
 
     /**
@@ -91,7 +92,7 @@ class LandingPage extends React.Component {
         return (
             <div className='LandingPage'>
                 <Jumbotron fluid>
-                    <h1 className='DerisHeader'>DERIS</h1>
+                    <h1 className='DerisHeader'>Decentralised Ride Sharing with SSI</h1>
                 </Jumbotron>
                 <div className='AddressInputContainer'>{this.renderAddressInput()}</div>
             </div>

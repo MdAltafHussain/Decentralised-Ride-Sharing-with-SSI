@@ -101,6 +101,7 @@ class DriverProgressPage extends React.Component {
         const nextPayment = parseInt(bills);
         const tripEnded = nextPayment + this.state.paid >= this.props.tripRate;
         this.setState(prevState => ({paid: prevState.paid += nextPayment, tripEnded}));
+        //this.setState(prevState => ({paid: nextPayment, tripEnded}));
     }
 
     // render the spinner while waiting
