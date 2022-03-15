@@ -3,6 +3,8 @@ import './styles/landingPage.css'
 import { Jumbotron } from 'react-bootstrap';
 import {TwoButtonTextSubmission} from '../modules/textInputs'
 import { isValidAddress } from '../js_modules/ethereumUtils.js'
+import { Form, Button } from 'react-bootstrap';
+import { InvalidTextInputError } from '../modules/errors';
 
 
 const INVALID_ADDRESS_MSG = 'ERROR: Ethereum address provided is not a valid address'
@@ -25,19 +27,27 @@ class LandingPage extends React.Component {
             ethereumAddress: '',
             validEthereumAddress: true,
         }
-        this.onChange = this.onChange.bind(this);
+        //this.onChange = this.onChange.bind(this);
         this.onRiderSubmit = this.onRiderSubmit.bind(this);
         this.onDriverSubmit = this.onDriverSubmit.bind(this);
         this.checkAndSubmitAddress = this.checkAndSubmitAddress.bind(this);
     }
     // keep tracking the user input to use for submission
-    onChange(event) {
+
+    componentDidMount(){
         //this.setState({ethereumAddress: event.target.value})
         const queryParams = new URLSearchParams(window.location.search);
         const id = queryParams.get('id'); //Sample address: http://localhost:3000/?id=55&name=test
         console.log(id);
-        this.setState({ethereumAddress:"0x456BD0F3417C6b61DD54AEF063152c2a3FAb6239"}) // here it will be id
+        this.setState({ethereumAddress: id}) // here it will be id
     }
+    // onChange(event) {
+    //     this.setState({ethereumAddress: event.target.value})
+    //     const queryParams = new URLSearchParams(window.location.search);
+    //     const id = queryParams.get('id'); //Sample address: http://localhost:3000/?id=55&name=test
+    //     console.log(id);
+    //     //this.setState({ethereumAddress:"0x456BD0F3417C6b61DD54AEF063152c2a3FAb6239"}) // here it will be id
+    // }
 
     /**
      * Check if the ethereum is valid. if not, show a warning, otherwise pass it up
@@ -45,6 +55,7 @@ class LandingPage extends React.Component {
      * @param {string} role either 'rider' or 'driver' 
      */
     checkAndSubmitAddress(role){
+        console.log("Check Submit is called");
         if (!isValidAddress(this.state.ethereumAddress) && !this.props.DEV){
             this.setState({
                 ethereumAddress: null,
@@ -59,10 +70,20 @@ class LandingPage extends React.Component {
 
     // Do different things based on which button is clicked
     onRiderSubmit(event) {
+        // const queryParams = new URLSearchParams(window.location.search);
+        // const id = queryParams.get('id'); //Sample address: http://localhost:3000/?id=55&name=test
+        // console.log(id + " Rider");
+        // this.setState({ethereumAddress:"0x456BD0F3417C6b61DD54AEF063152c2a3FAb6239"}); // here it will be id
+        
         event.preventDefault();
         this.checkAndSubmitAddress('rider');
     }
     onDriverSubmit(event) {
+        // const queryParams = new URLSearchParams(window.location.search);
+        // const id = queryParams.get('id'); //Sample address: http://localhost:3000/?id=55&name=test
+        // console.log(id + " driver");
+        // this.setState({ethereumAddress:"0x456BD0F3417C6b61DD54AEF063152c2a3FAb6239"}); // here it will be id
+        
         event.preventDefault();
         this.checkAndSubmitAddress('driver');
     }
@@ -77,14 +98,28 @@ class LandingPage extends React.Component {
         }
         return (
             <div className="LandingPageInputsContainer">
-                <TwoButtonTextSubmission 
+                <Form onSubmit={primary.submitFunction}> 
+                    {/* <Form.Group controlId="formBasicPassword">
+                        <Form.Label>Ethereum Address</Form.Label>
+                        <Form.Control onChange={this.onChange}/>
+                    </Form.Group> */}
+                    <InvalidTextInputError
+                            show={!this.state.validEthereumAddress}
+                            errorMessage={INVALID_ADDRESS_MSG}
+                    ></InvalidTextInputError>
+                    <div className="TwoButtonTextSubmissionButtonContainer">
+                        <Button className="PrimaryButton" type="submit" size="lg" block>{primary.label}</Button>
+                        <Button className="SecondaryButton" size="lg" onClick={secondary.submitFunction} block>{secondary.label}</Button>
+                    </div>
+                </Form>
+                {/* <TwoButtonTextSubmission 
                     inputLabel="Ethereum Address"
                     primary={primary}
                     secondary={secondary}
                     onChange={this.onChange}
                     validInput={this.state.validEthereumAddress}
                     invalidInputMessage={INVALID_ADDRESS_MSG}
-                ></TwoButtonTextSubmission>
+                ></TwoButtonTextSubmission> */}
             </div>
             
         )
