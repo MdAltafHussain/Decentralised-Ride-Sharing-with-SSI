@@ -4,6 +4,7 @@ import { Jumbotron } from 'react-bootstrap';
 import {TwoButtonTextSubmission} from '../modules/textInputs'
 import { isValidAddress } from '../js_modules/ethereumUtils.js'
 
+
 const INVALID_ADDRESS_MSG = 'ERROR: Ethereum address provided is not a valid address'
 
 /**
@@ -31,8 +32,11 @@ class LandingPage extends React.Component {
     }
     // keep tracking the user input to use for submission
     onChange(event) {
-        this.setState({ethereumAddress: event.target.value})
-        //this.setState({ethereumAddress:"0x94Fe9c9e69Ec51b0A4248C8FE9dB19885Af4c099"})
+        //this.setState({ethereumAddress: event.target.value})
+        const queryParams = new URLSearchParams(window.location.search);
+        const id = queryParams.get('id'); //Sample address: http://localhost:3000/?id=55&name=test
+        console.log(id);
+        this.setState({ethereumAddress:"0x456BD0F3417C6b61DD54AEF063152c2a3FAb6239"}) // here it will be id
     }
 
     /**
