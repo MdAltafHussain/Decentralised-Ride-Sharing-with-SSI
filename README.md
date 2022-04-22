@@ -13,7 +13,7 @@ The project contains the frontend website and backend Ethereum Smart Contract to
 * Once ganache is installed, a test network is started using `quickstart`. The default test network start on local host at port number 7545 (http://127.0.0.1:7545)
 * The `backend/mig.js` script can be used to deploy the contract onto the ganache test network.
 * Make sure to have the right network address and contract deployer enthereum address (from address) set to deploy the contract correctly on the Ganache test network instance.
-* If the `mig.js` file is giving problems in deployment, the Remix IDE (https://remix.ethereum.org/) can also be used to deploy the contract on the ganache test network instance. Again make sure to have the right network address selected. 
+* If the `mig.js` file is giving problems in deplyment, the Remix IDE (https://remix.ethereum.org/) can also be used to deploy the contract on the ganache test network instance. Again make sure to have the right network address selected. 
 * Be sure to note down the address the contract was deployed at.
 
 ## React application
